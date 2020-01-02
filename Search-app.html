@@ -1,0 +1,136 @@
+<html>
+    <head>
+        <style>
+        table, th, td {
+            border: 1px solid black;
+            }
+        </style>
+        <script>
+            var students=[{id:0, name:"Riya", age:20, subject:"Maths", marks:90},
+                            {id:1, name:"Deep", age:21, subject:"Maths", marks:80},
+                            {id:2, name:"Nirali", age:19, subject:"English", marks:90},
+                            {id:3, name:"Kishan", age:20, subject:"Maths", marks:85},
+                            {id:4, name:"Mehul", age:21, subject:"English", marks:89},
+                            {id:5, name:"Bhoomi", age:20, subject:"Maths", marks:91},
+                            {id:6, name:"Digesh", age:21, subject:"English", marks:90},
+                            {id:7, name:"Nancy", age:22, subject:"Maths", marks:70},
+                            {id:8, name:"Niraj", age:21, subject:"English", marks:75},
+                            {id:9, name:"Sagar", age:22, subject:"English", marks:86}];
+
+            
+        
+            
+            function search_function()
+            {
+                document.getElementById("data_table").style.display="none";
+//                var li= document.createElement("li");
+//                li.style.listStyleType="none";
+               document.getElementById("myTable").style.display="block";
+                document.getElementById("show").style.display="none";
+                var srch_item=document.getElementById("item").value;
+                var student = students.filter(function(obj) {
+                    return obj.name.match(srch_item);
+                });
+//                var temp="ID Name Age Sub Mark";
+//                var temptxt=document.createTextNode(temp);
+//                li.appendChild(temptxt);
+//                document.getElementById("show").appendChild(li);
+//                var tempbr= document.createElement("br");
+//                li.appendChild(tempbr);
+//                document.getElementById("show").appendChild(li);
+                    var temptable = document.getElementById("myTable");
+                    var temprow = temptable.insertRow(0);
+                    var tempcell1 = temprow.insertCell(0);
+                    var tempcell2 = temprow.insertCell(1);
+                    var tempcell3 = temprow.insertCell(2);
+                    var tempcell4 = temprow.insertCell(3);
+                    var tempcell5 = temprow.insertCell(4);
+                    tempcell1.innerHTML ="ID";
+                    tempcell2.innerHTML ="NAME";
+                    tempcell3.innerHTML ="AGE";
+                    tempcell4.innerHTML ="SUBJECT";
+                    tempcell5.innerHTML ="MARKS";
+                
+                for(var i=0;i<student.length;i++)
+                {
+                    var table = document.getElementById("myTable");
+                    var row = table.insertRow(i+1);
+                    var cell1 = row.insertCell(0);
+                    var cell2 = row.insertCell(1);
+                    var cell3 = row.insertCell(2);
+                    var cell4 = row.insertCell(3);
+                    var cell5 = row.insertCell(4);
+                    cell1.innerHTML =student[i].id;
+                    cell2.innerHTML =student[i].name;
+                    cell3.innerHTML =student[i].age;
+                    cell4.innerHTML =student[i].subject;
+                    cell5.innerHTML =student[i].marks;
+//                    var data=student[i].id+"  "+student[i].name+"  "+student[i].age+"  "+student[i].subject+"  "+student[i].marks;
+//                    var text=document.createTextNode(data);
+//                    li.appendChild(text);
+//                    document.getElementById("show").appendChild(li);
+//                    var br= document.createElement("br");
+//                    li.appendChild(br);
+//                    document.getElementById("show").appendChild(li);
+                    
+                }
+            }
+            </script>   
+             </head>
+             <body>
+                <center>
+                
+                 <p>SEARCH:<input type="text" id="item"><button type="submit" id="srch" onclick="search_function()">SEARCH</button>
+                 <select id="mySelect" onchange="option_Select(this)">
+                     <p id="opt"></p>
+                </select>
+                     <script>
+                     document.write('<center><table id="data_table">');
+                         document.write("<tr><td>ID</td><td>NAME</td><td>AGE</td><td>SUBJECT</td><td>MARKS</td><td></td></tr>");
+                         for(var i=0;i<students.length;i++)
+                         {
+                             document.write("<tr><td>"+students[i].id+"</td><td>"+students[i].name+"</td><td>"+students[i].age+"</td><td>"+students[i].subject+"</td><td>"+students[i].marks+"</td><td><input type=number id="+students[i].id+" value="+students[i].marks+"></td></tr>");
+                         }
+                        document.write("</table></center>");
+                     </script>
+                     
+                     
+                 </p>
+                    <ul id="show"> </ul>
+                    <center>
+                    <table id="myTable" style="width: 260px"></table></center>
+                    <button type="button" onclick="total_Marks()">TOTAL MARKS</button><p id="ttl"></p>
+                <script>
+                    for(var i=0;i<students.length;i++){
+                             document.getElementById("mySelect").innerHTML += "<option>"+students[i].name+
+                            "</option>";
+                        }
+                    function option_Select(selTag){
+                        var x = selTag.options[selTag.selectedIndex].text;
+                        console.log(x);
+                        document.getElementById("data_table").style.display="none";
+                        document.getElementById("myTable").style.display="none";
+                        var student = students.find(function(obj) {
+                        return obj.name==x;})
+                         document.getElementById("show").innerHTML ='<table><tr><td>id</td><td>name</td><td>age</td><td>subject</td><td> marks</td></tr><tr><td>'+student.id+'</td><td>'+student.name+'</td><td>'+student.age+'</td><td>'+student.subject+'</td><td>'+student.marks+'</td></tr></table>';
+                        }
+                        var marks=0;
+                    function total_Marks(){
+                        var total = students.reduce(function (accumulator, student) {
+                            var newm=parseInt(document.getElementById(student.id).value);
+                            if(student.marks==newm)
+                            {
+                            return accumulator + student.marks;
+                            }
+                            else{
+                                return accumulator + newm;
+                            }
+                        }, 0);
+                        document.getElementById("ttl").innerHTML=total;
+                    }
+                    
+                </script>  
+    </center>
+    </body>
+</html>
+
